@@ -85,7 +85,7 @@ stylesheet once (regardless of how many times the same stylesheet is declared).
 
  + **response** - the Express `response` instance that the page content should
     be rendered to.
- + **options** - a hash of attributes to be used by the template
+ + **context** - a hash of attributes to be used by the template
     engine.
  + **next** - the 'next middleware' callback. This is typically used for error
     handling.
