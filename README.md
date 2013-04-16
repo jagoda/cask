@@ -1,14 +1,14 @@
 Cask
 ====
 
-Cask is a micro-framework for creating template-based web pages with Express[1].
-Cask currently only supports Mustache[2] templating.
+Cask is a micro-framework for creating template-based web pages with
+[Express][1]. Cask currently only supports [Mustache][2] templating.
 
 ## Basic Usage
 
     npm install cask
     
-Cask allows pages to be declaritively defined as modules similar to Connect[3]
+Cask allows pages to be declaritively defined as modules similar to [Connect][3]
 middleware. The page can then be rendered by passing a `Response` instance, a
 context object, and the middleware callback. For example:
 
