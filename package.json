@@ -4,12 +4,12 @@
   "description": "cask ====",
   "main": "lib/cask.js",
   "dependencies": {
-    "chasis": "~0.0.0",
     "async": "~0.2.7",
     "hogan.js": "~2.0.0"
   },
   "devDependencies": {
     "chai": "~1.5.0",
+    "chasis": "~0.0.0",
     "express": "~3.2.0",
     "sonar": "0.0.0"
   },
