@@ -85,11 +85,33 @@ describe("A page", function () {
         );
     });
     
+    application.get("/scripts", function (request, response, next) {
+        pages(TEMPLATES).load("scripts.txt", function (error, page) {
+            if (error) return next(error);
+            [ "foo", "test", "test", "bar" ].forEach(function (name) {
+                page.addScript("/static/" + name + ".js");
+            });
+            response.set("Content-Type", "text/plain");
+            page.renderTo(response);
+        });
+    });
+    
     application.get("/simple", function (request, response, next) {
         pages(TEMPLATES).load("simple.txt", function (error, page) {
             if (error) return next(error);
             response.set("Content-Type", "text/plain");
             page.renderTo(response, request.query, next);
+        });
+    });
+    
+    application.get("/stlyesheets", function (request, response, next) {
+        pages(TEMPLATES).load("scripts.txt", function (error, page) {
+            if (error) return next(error);
+            [ "foo", "test", "test", "bar" ].forEach(function (name) {
+                page.addStylesheet("/static/" + name + ".css");
+            });
+            response.set("Content-Type", "text/plain");
+            page.renderTo(response);
         });
     });
 
@@ -172,6 +194,30 @@ describe("A page", function () {
                 expect(error.message).to.match(/call stack size exceeded/);
                 done();
             }
+        );
+    });
+    
+    // Bug: Cask sends array for scripts and stylesheets -- this results in
+    // rogue commas in the HTML.
+    it("does not separate declared resources with commas", function (done) {
+        async.parallel(
+            {
+                scripts: function (callback) {
+                    SONAR.get("/scripts", function (error, response) {
+                        if (error) return callback(error);
+                        expect(response.body).to.not.contain(",");
+                        callback();
+                    });
+                },
+                stylesheets: function (callback) {
+                    SONAR.get("/stylesheets", function (error, response) {
+                        if (error) return callback(error);
+                        expect(response.body).to.not.contain(",");
+                        callback();
+                    });
+                }
+            },
+            done
         );
     });
 
